@@ -1,5 +1,6 @@
-# 
-Collaborart
+<img src="https://raw.githubusercontent.com/jwellik/collaborart/main/img/obama_grid.jpg" width=717 alt="Obama grid" />
+
+## Collaborart
 Usage:
 
 First, store an image in a directory under collaborart/ like this:
