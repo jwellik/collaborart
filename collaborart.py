@@ -30,8 +30,8 @@ Instead of reading images like obama/obama.jpg,
 read image like images/obama.jpg,
 and then make results/obama/obama.jpg, results/obama_grid.jpg, results/obama_<>.jpg
 [ ] Automatically parse extension type
-[ ] Fix drawing of grid
-[ ] Don't make incomplete cells
+[X] Fix drawing of grid
+[X] Don't make incomplete cells
 [ ] Add option to center grid if extra space exists
 [ ] Clean up col, row incrementing (make smarter)
 
