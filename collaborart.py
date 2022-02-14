@@ -13,19 +13,20 @@ def main(input_image, N):
 	sz, grid = grid_size(img.size, N)  # size in pixels, (col-by-row) for grid
 	width, height = img.size  # image size in pixels
 
-	print('Drawing grid & cropping file...')	
+	print('Drawing grid & cropping file...')
+	# Nested "for y: ..., for x:" loops mean you are working left to right, then
+	# top to bottom. I.e., A1, B1, ... BN, A2, B2, ... BN, ....
 	draw = ImageDraw.Draw(img2)  # create an object to draw on
-	col = "A"  
 	row = 1  # initialize first row as 1 (vertical)
 	for y in range(0,grid[1]):  # for every row
 		col = "A"  # initiale A as first column
-		draw.line((0,y*sz,grid[0]*sz,y*sz), fill=128)  # draw horizontal line
+		draw.line((0,y*sz,grid[0]*sz,y*sz), fill=128)  # draw horizontal line (top)
 		for x in range(0, grid[0]):  # for every column
-			draw.line((x*sz,0,x*sz,grid[1]*sz), fill = 128)  # draw vertical line
+			draw.line((x*sz,0,x*sz,grid[1]*sz), fill = 128)  # draw vertical line (left)
 			draw.text((x*sz, y*sz), "{} ({}x{})".format(
 				"{}{}".format(col, row),
-				x*sz, y*sz))  # put text in cell
-			box = (x*sz, y*sz, x*sz + sz, y*sz + sz)  # define cell box
+				x*sz, y*sz))  # put text in cell (top left)
+			box = (x*sz, y*sz, x*sz + sz, y*sz + sz)  # define cell box (l, t, r, b)
 			cell_filename = '{}_{}_x{}-y{}.jpg'.format(
 				infile.replace('.jpg',''),
 				"{}{}".format(col, row),
@@ -87,6 +88,14 @@ TO DO:
 Instead of reading images like obama/obama.jpg,
 read image like images/obama.jpg,
 and then make results/obama/obama.jpg, results/obama_grid.jpg, results/obama_<>.jpg
+
+# INPUTFILE = "image/{input_image}"
+filename, ext = os.path.splitext(input_image)
+# OUTPUTGRID = "image/{filename:}/{filename}_grid.{ext}"
+# OUTPUTCELL = "image/{filename:}/{filename}_{col}{row}_{xpos}{ypos}.{ext}"
+# CELLLABEL = "{col}{row} ({xpos}x{ypos})"
+
+
 [ ] Automatically parse extension type
 [X] Fix drawing of grid
 [X] Don't make incomplete cells
