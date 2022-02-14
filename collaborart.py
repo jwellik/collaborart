@@ -13,7 +13,7 @@ def main(input_image, N):
 	sz, grid = grid_size(img.size, N)  # size in pixels, (col-by-row) for grid
 	width, height = img.size  # image size in pixels
 
-	print('Drawing grid...')	
+	print('Drawing grid & cropping file...')	
 	draw = ImageDraw.Draw(img2)  # create an object to draw on
 	col = "A"  
 	row = 1  # initialize first row as 1 (vertical)
