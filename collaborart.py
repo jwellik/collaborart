@@ -4,7 +4,7 @@ import utils
 def main(input_image, N):
 	print("::: COLLABORART :::")
 
-	utils.chop_file(input_image, N)
+	utils.draw_grid(input_image, N)
 	print("Done")
 
 
@@ -33,6 +33,6 @@ and then make results/obama/obama.jpg, results/obama_grid.jpg, results/obama_<>.
 [X] Fix drawing of grid
 [X] Don't make incomplete cells
 [ ] Add option to center grid if extra space exists
-[ ] Clean up col, row incrementing (make smarter)
+[x] Clean up col, row incrementing (make smarter)
 
 """

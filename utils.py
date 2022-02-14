@@ -23,67 +23,42 @@ def grid_size(img_size, N):
 	return s, grid
 
 
-def chop_file(filepath, N):
-	from PIL import Image
-	import os
-
-	infile = filepath
-	img = Image.open(infile)
-	chopsize, grid = grid_size(img.size, N)
-	width, height = img.size
-
-	#dir = os.path.splitext(filepath)[0]
-	#os.mkdir(dir)
-	#os.chdir(dir)
-
-	# Save Chops of original image
-	col = "A"
-	row = 1
-	for x0 in range(0, width, chopsize):
-		row = 1
-		for y0 in range(0, height, chopsize):
-			box = (x0, y0,
-				x0+chopsize if x0+chopsize <  width else  width - 1,
-				y0+chopsize if y0+chopsize < height else height - 1)
-			#print('{} {}'.format(infile, box))
-			cell_filename = '{}_{}_x{}-y{}.jpg'.format(
-				infile.replace('.jpg',''),
-				"{}{}".format(col, row),
-				x0, y0,
-				)
-			img.crop(box).save(cell_filename)
-			#print("{}{}".format(col, row))
-			print(cell_filename)
-			row += 1
-		col = chr(ord(col)+1).capitalize()
-	#os.chdir('..')
-	draw_grid(img, grid, chopsize, infile)
-
-			
-def draw_grid(im, grid, sz, outpath):
+def draw_grid(filepath, N):
 # im 	: PIL image object
 # grid 	: tuple	: grid size, e.g. (13,11) --> (13 columns, 11 rows)
 # sz	: int	: pixel width & height of each grid cell 
 # outpath : str	: filename.jpg --> will become 'filename_grid.jpg'
 #
-	print('Drawing grid...')
-	from PIL import Image, ImageDraw
 	import os
-	
-	draw = ImageDraw.Draw(im)
-	col = "A"
-	row = 1
-	for y in range(0,grid[1]): # draw horizontal lines
-		col = "A"
-		draw.line((0,y*sz,grid[0]*sz,y*sz), fill=128)
-		# for x in range(0, grid[0]+1):
-		for x in range(0, grid[0]):  # draw vertical lines
-			draw.line((x*sz,0,x*sz,grid[1]*sz), fill = 128)
+	from PIL import Image
+
+	infile = filepath
+	img = Image.open(infile)  # image for cropping
+	img2 = Image.open(infile)  # image for drawing grid
+	sz, grid = grid_size(img.size, N)  # size in pixels, (col-by-row) for grid
+	width, height = img.size  # image size in pixels
+
+	print('Drawing grid...')	
+	draw = ImageDraw.Draw(img2)  # create an object to draw on
+	col = "A"  
+	row = 1  # initialize first row as 1 (vertical)
+	for y in range(0,grid[1]):  # for every row
+		col = "A"  # initiale A as first column
+		draw.line((0,y*sz,grid[0]*sz,y*sz), fill=128)  # draw horizontal line
+		for x in range(0, grid[0]):  # for every column
+			draw.line((x*sz,0,x*sz,grid[1]*sz), fill = 128)  # draw vertical line
 			draw.text((x*sz, y*sz), "{} ({}x{})".format(
 				"{}{}".format(col, row),
-				x*sz, y*sz))
-			col = chr(ord(col)+1)
-		row += 1
+				x*sz, y*sz))  # put text in cell
+			box = (x*sz, y*sz, x*sz + sz, y*sz + sz)  # define cell box
+			cell_filename = '{}_{}_x{}-y{}.jpg'.format(
+				infile.replace('.jpg',''),
+				"{}{}".format(col, row),
+				x, y)  # define cell filename
+			img.crop(box).save(cell_filename)  # crop the file
+			print(cell_filename)  # print the filename when done
+			col = chr(ord(col)+1)  # increment column
+		row += 1  increment row
 	draw.line((0,grid[1]*sz,grid[0]*sz,grid[1]*sz), fill=128)  # add bottom line
 	draw.line((grid[0]*sz,0,grid[0]*sz,grid[1]*sz), fill = 128)  # add right line
-	im.save('{}_grid.jpg'.format(outpath.replace('.jpg','')))
+	img2.save('{}_grid.jpg'.format(infile.replace('.jpg','')))  # save image w grid
