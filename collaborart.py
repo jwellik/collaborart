@@ -5,8 +5,6 @@ def main(input_image, N):
 	print("::: COLLABORART :::")
 
 	utils.chop_file(input_image, N)
-	#print(" - {}".format(arg1))
-	#print(" - {}".format(arg2))
 	print("Done")
 
 
