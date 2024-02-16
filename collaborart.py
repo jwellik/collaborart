@@ -7,7 +7,21 @@ def main(input_image, N):
 
 	print("::: COLLABORART :::")
 
+	# Define name of input images and initialize output folder
 	infile = input_image
+	name = infile.replace(".jpg", "").replace(" ", "_")  # replace extension and blank spaces
+	name = name[0:15]  # make name short
+	name_n = "{}_{:03}".format(name, N)  # e.g., obama_040
+
+	# Define outputdir and output paths
+	outputdir = name_n  # outputdirectory
+	# cell_filename = "{}_{}{}_x{}_y{}.jpg"  # (e.g., obama_40_A1_x1_y1.jpg)
+	# cell_fullpath = os.path.jon(outputdir, cell_filename)
+	grid_filename = '{}_grid.jpg'.format(name_n)  # e.g., obama_040_grid.jpg
+	# grid_fullpath = os.path.join(outputdir, grid_filename)  # e.g., obama_040/obama_040_grid.jpg
+	os.mkdir(outputdir)
+
+	# Initialize output images
 	img = Image.open(infile)  # image for cropping
 	img2 = Image.open(infile)  # image for drawing grid
 	sz, grid = grid_size(img.size, N)  # size in pixels, (col-by-row) for grid
@@ -28,16 +42,17 @@ def main(input_image, N):
 				x*sz, y*sz))  # put text in cell (top left)
 			box = (x*sz, y*sz, x*sz + sz, y*sz + sz)  # define cell box (l, t, r, b)
 			cell_filename = '{}_{}_x{}-y{}.jpg'.format(
-				infile.replace('.jpg',''),
-				"{}{}".format(col, row),
-				x, y)  # define cell filename
-			img.crop(box).save(cell_filename)  # crop the file
-			print(cell_filename)  # print the filename when done
+				name_n, "{}{}".format(col, row), x, y)  # define cell filename
+			cell_fullpath = os.path.join(outputdir, cell_filename)
+			img.crop(box).save(cell_fullpath)  # crop the file
+			print(cell_fullpath)  # print the filename when done
 			col = chr(ord(col)+1)  # increment column
 		row += 1  # increment row
 	draw.line((0,grid[1]*sz,grid[0]*sz,grid[1]*sz), fill=128)  # add bottom line
 	draw.line((grid[0]*sz,0,grid[0]*sz,grid[1]*sz), fill = 128)  # add right line
-	img2.save('{}_grid.jpg'.format(infile.replace('.jpg','')))  # save image w grid
+	# grid_filename = '{}_{:03}_grid.jpg'.format(infile.replace('.jpg',''), N)
+	grid_fullpath = os.path.join(outputdir, grid_filename)
+	img2.save(grid_fullpath)  # save image w grid
 
 	print("Done")
 
