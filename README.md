@@ -8,7 +8,7 @@ This program takes an input image and splits it into a grid of N cells. Each cel
 ## Usage
 
 First, store an image in a directory under collaborart/ like this:
-- collaborart/obama/obama.jpg
+- collaborart/obama.jpg
 
 Then, navigate to the collaborart folder, and run the python file with the
 filename and minimum number of desired cells.
