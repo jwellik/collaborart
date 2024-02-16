@@ -1,7 +1,19 @@
+# Project Name
 <img src="https://raw.githubusercontent.com/jwellik/collaborart/main/img/obama_grid.jpg" width=717 alt="Obama grid" />
 
-## Collaborart
-Usage:
+## Description
+
+This program takes an input image and splits it into a grid of N cells. Each cell is output as its own image. A reference image is with the grid overlay is also produced. Cells are named by row and column as well as x and y position.
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Additional Information](#additional-information)
+
+## Usage
 
 First, store an image in a directory under collaborart/ like this:
 - collaborart/obama/obama.jpg
@@ -9,16 +21,18 @@ First, store an image in a directory under collaborart/ like this:
 Then, navigate to the collaborart folder, and run the python file with the
 filename and minimum number of desired cells.
 
+```bash
 $ cd collaborart
-
 $ python collaborart.py obama/obama.jpg 40
+```
 
+This results in a new folder: 'obama_040' that contains the reference grid and a new image for each cell.
 
-Result:
-
-collaborart/obama/obama_grid.jpg
-collaborart/obama2/obama2_x0-y0.jpg
+```
+collaborart/obama_040/obama_040_grid.jpg
+collaborart/obama_040/obama_040_x0-y0.jpg
 .
 .
 .
-collaborart/obama2/obama2_x644-y460.jpg
+collaborart/obama_040/obama_040_x644-y460.jpg
+```
